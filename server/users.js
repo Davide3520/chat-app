@@ -16,17 +16,17 @@ const addUser = ({ id, name, room }) => {
 
   users.push(user);
 
-  return { user }
+  return { user };
 };
 
 const removeUser = (id) => {
   //check if there is the user to remove
-  const indexUser = users.findIndex((user) => user.id === id)
+  const indexUser = users.findIndex((user) => user.id === id);
   if (indexUser !== -1) {
     return users.splice(indexUser, 1)[0];
   }
 };
 
-const getUser = () => {};
+const getUser = (id) => users.find((user) => user.id === id);
 
-const getUserInRoom = () => {};
+const getUserInRoom = (room) => users.filter((user) => user.room === room);
