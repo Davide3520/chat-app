@@ -7,15 +7,15 @@ let socket;
 const Chat = ({ location }) => {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
-  const ENDPOINT = 'localhost:3000'
+  const ENDPOINT = 'localhost:8080'
   useEffect(() => {
 
     const { name, room }=  queryString.parse(window.location.search)
-    socket = io(ENDPOINT);
+    socket = io(ENDPOINT, { transports : ['websocket'] });
     setName(name);
     setRoom(room)
 
-    socket.emit()
+    socket.emit('join', { name, room })
 
   }, [ENDPOINT, window.location.search])
   return (
