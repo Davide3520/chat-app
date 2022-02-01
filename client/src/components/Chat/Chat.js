@@ -1,26 +1,27 @@
-import React, {useState, useEffect} from "react";
-import queryString from 'query-string';
-import io from 'socket.io-client';
+import React, { useState, useEffect } from "react";
+import queryString from "query-string";
+import io from "socket.io-client";
 
 let socket;
 
 const Chat = ({ location }) => {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
-  const ENDPOINT = 'localhost:8080'
+  const ENDPOINT = "localhost:8080";
   useEffect(() => {
-
-    const { name, room }=  queryString.parse(window.location.search)
-    socket = io(ENDPOINT, { transports : ['websocket'] });
+    const { name, room } = queryString.parse(window.location.search);
+    socket = io(ENDPOINT, { transports: ["websocket"] });
     setName(name);
-    setRoom(room)
+    setRoom(room);
 
-    socket.emit('join', { name, room })
+    socket.emit("join", { name, room }, () => {});
 
-  }, [ENDPOINT, window.location.search])
-  return (
-    <h1>CHATT</h1>
-  )
-}
+    return () => {
+      socket.emit("disconnect");
+      socket.off();
+    };
+  }, [ENDPOINT, window.location.search]);
+  return <h1>CHATT</h1>;
+};
 
 export default Chat;
