@@ -19,7 +19,13 @@ const addUser = ({ id, name, room }) => {
   return { user }
 };
 
-const removeUser = () => {};
+const removeUser = (id) => {
+  //check if there is the user to remove
+  const indexUser = users.findIndex((user) => user.id === id)
+  if (indexUser !== -1) {
+    return users.splice(indexUser, 1)[0];
+  }
+};
 
 const getUser = () => {};
 
