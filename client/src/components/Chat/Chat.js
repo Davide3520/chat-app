@@ -7,8 +7,8 @@ let socket;
 const Chat = ({ location }) => {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
-  const [message, setMessage] = useState([]);
-  const [messages, setMessages] = useState('');
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
   const ENDPOINT = "localhost:8080";
 
   useEffect(() => {
@@ -26,12 +26,21 @@ const Chat = ({ location }) => {
   }, [ENDPOINT, window.location.search]);
 
   useEffect(() => {
-    socket.on('message', (message) => { // message is from backend
+    socket.on("message", (message) => {
+      // message is from backend
+      setMessage([...messages, message]); // cannot mutate state;
+    });
+  }, [messages]);
 
-    })
-  })
-
-  return <h1>CHATT</h1>;
+  return (
+  <div className="outerContainer">
+    <div className="container">
+      <input value={message} onChange={(ev) => setMessage(ev.target.value)}
+      onKeyPress={event => event.key === 'Enter' ? sendMessage(event) : null }
+      />
+    </div>
+  </div>
+  );
 };
 
 export default Chat;
