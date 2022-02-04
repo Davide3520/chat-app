@@ -1,7 +1,12 @@
 import React from "react";
+import './Text.css';
 
-const TextContainer = ({ users }) => {
+import onlineIcon from '../../icons/onlineIcon.png';
 
-}
+const TextContainer = ({ users }) => (
+  <h1>
+    Helloo
+  </h1>
+)
 
 export default TextContainer;

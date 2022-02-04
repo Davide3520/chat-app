@@ -6,12 +6,14 @@ import './Chat.css'
 import InfoBar from '../InforBar/InfoBar'
 import Input from '../Input/Input'
 import Messages from '../Messages/Messages'
+import TextContainer from '../TextContainer/TextContainer'
 
 let socket;
 
 const Chat = ({ location }) => {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
+  const [users, setUsers] = useState('');
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const ENDPOINT = "localhost:8080";
@@ -34,6 +36,10 @@ const Chat = ({ location }) => {
     socket.on("message", (message) => {
       // message is from backend
       setMessages([...messages, message]); // cannot mutate state;
+    });
+
+    socket.on("roomData", ({ users }) => {
+      setUsers(users);
     });
   }, [messages]);
 
